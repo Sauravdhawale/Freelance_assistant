@@ -1,6 +1,6 @@
 # Arkentech Freelance Assistant — Netlify setup
 
-This package contains the React dashboard, its Express API adapted to Netlify Functions, a background worker, PostgreSQL migrations, and six n8n workflows. It is not yet a live connected service. Automatic marketplace submission is disabled; proposals are reviewed and submitted manually.
+This package contains the React dashboard, its Express API adapted to Netlify Functions, a background worker, PostgreSQL migrations, and six n8n workflows. The production dashboard is deployed at https://freelancebooxgen.netlify.app. Its dedicated Neon PostgreSQL database is `freelance_assistant` in the `freelance-assistant` project. Production environment settings must be applied through a new Netlify deployment before the service can connect. Automatic marketplace submission is disabled; proposals are reviewed and submitted manually.
 
 ## 1. Where each component runs
 
@@ -95,7 +95,7 @@ Open the site, sign in with your administrator account, and check `/api/health` 
 Regenerate the six inactive workflows with your actual site URL:
 
 ```bash
-node scripts/build-workflows.mjs https://your-site.netlify.app
+node scripts/build-workflows.mjs https://freelancebooxgen.netlify.app
 ```
 
 Import the files from `n8n-netlify/` into your n8n instance. Create a saved **Header Auth** credential named **Freelance Assistant API**:
