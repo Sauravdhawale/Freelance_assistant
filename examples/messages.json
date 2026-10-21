@@ -1,0 +1,13 @@
+{
+  "items": [
+    {
+      "platform": "upwork",
+      "external_id": "EXAMPLE-LOCAL-MESSAGE-001",
+      "client_name": "Fictional Test Client",
+      "body": "EXAMPLE ONLY. This is a fictional interview invitation for local testing. Are you available for an interview to discuss the example WordPress project? No real client sent this message.",
+      "received_at": "2026-10-20T12:00:00Z",
+      "conversation_url": "https://www.upwork.com/ab/messages/rooms/EXAMPLE-LOCAL-ROOM-001",
+      "job_url": "https://www.upwork.com/jobs/~EXAMPLE-DO-NOT-SUBMIT-WP-001"
+    }
+  ]
+}

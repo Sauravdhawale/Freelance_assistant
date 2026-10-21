@@ -1,0 +1,18 @@
+{
+    email {$TLS_EMAIL}
+    admin off
+}
+
+{$APP_DOMAIN} {
+    encode zstd gzip
+    # Workflow tokens are used only inside the private Docker network.
+    @internal path /internal /internal/*
+    respond @internal 404
+    reverse_proxy app:3000
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "same-origin"
+        -Server
+    }
+}

@@ -1,0 +1,131 @@
+{
+  "name": "Freelance Assistant | Daily report at 8 PM IST",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Daily report at 8 PM IST\nProduce the daily database report at 20:00 Asia/Kolkata, including zero-activity days; queue delivery to the configured user email.\n\n**Setup:** select the saved Header Auth credential **Freelance Assistant API** in the HTTP Request node. It must contain **Authorization** = **Bearer <WORKFLOW_TOKEN>**.\n\nThe URL targets your Netlify API. A queued response means accepted, not completed; inspect Automation Logs for the actual result. The API checks the dashboard workflow pause setting. Save and publish only after configuring and testing.",
+        "height": 330,
+        "width": 630
+      },
+      "id": "66189345-b5ae-4b3a-adfb-222c8f21eb63",
+      "name": "Setup and purpose",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 20 * * *"
+            }
+          ]
+        }
+      },
+      "id": "af5d8a96-6b14-4721-a344-8e6848562254",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -340,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "75b9f646-e7dc-4b8b-aebe-3b549c73ad47",
+      "name": "Manual check",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://your-site.netlify.app/internal/workflows/daily_report/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Idempotency-Key",
+              "value": "={{ $workflow.id + \":\" + $execution.id }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{}",
+        "options": {
+          "timeout": 300000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "619cff62-ef73-490c-aaf4-34dd821dc046",
+      "name": "Run authorized backend workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        80
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notesInFlow": true,
+      "notes": "Choose the Header Auth credential. Keep backend tokens out of node parameters. Retries reuse the same execution idempotency key."
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Run authorized backend workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual check": {
+      "main": [
+        [
+          {
+            "node": "Run authorized backend workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "executionTimeout": 1000,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

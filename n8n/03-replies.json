@@ -1,0 +1,131 @@
+{
+  "name": "Freelance Assistant | Monitor client reply notifications",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Monitor client reply notifications\nPoll the dedicated IMAP folder for allowed platform notifications, match conversations and queue alerts. Never send client replies.\n\n**Setup:** select the saved Header Auth credential **Freelance Assistant API** in the HTTP Request node. It must contain **Authorization** = **Bearer <WORKFLOW_TOKEN>**.\n\nThe default URL is for the included Docker Compose stack. The API checks the dashboard workflow pause setting. Save and publish only after configuring and testing.",
+        "height": 330,
+        "width": 630
+      },
+      "id": "9b04d080-6faf-4e4d-a26a-9d8fe8af0f63",
+      "name": "Setup and purpose",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "* * * * *"
+            }
+          ]
+        }
+      },
+      "id": "336ce258-3c52-438a-a5ee-362082e97323",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -340,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "8d923fe5-8350-4ae3-ae01-0e6ec6a78a80",
+      "name": "Manual check",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://app:3000/internal/workflows/replies/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Idempotency-Key",
+              "value": "={{ $workflow.id + \":\" + $execution.id }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{}",
+        "options": {
+          "timeout": 120000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "897c0f83-a7e5-4d5c-a590-9bc058cbac51",
+      "name": "Run authorized backend workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        80
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notesInFlow": true,
+      "notes": "Choose the Header Auth credential. Keep backend tokens out of node parameters. Retries reuse the same execution idempotency key."
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Run authorized backend workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual check": {
+      "main": [
+        [
+          {
+            "node": "Run authorized backend workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "executionTimeout": 420,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

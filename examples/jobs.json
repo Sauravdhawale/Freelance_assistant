@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "platform": "upwork",
+      "external_id": "EXAMPLE-DO-NOT-SUBMIT-WP-001",
+      "title": "EXAMPLE ONLY — WordPress website and technical SEO",
+      "description": "Fictional test opportunity. Build a five-page WordPress website using supplied copy and branding. Configure a contact form, mobile layouts, technical SEO and page speed checks. Use HTML, CSS and JavaScript where needed. Include a handover. This is not a real job and must never be submitted to a marketplace.",
+      "url": "https://www.upwork.com/jobs/~EXAMPLE-DO-NOT-SUBMIT-WP-001",
+      "budget_min": 300,
+      "budget_max": 500,
+      "currency": "USD",
+      "work_type": "fixed",
+      "experience_level": "intermediate",
+      "skills": ["WordPress", "HTML", "CSS", "JavaScript", "Technical SEO"],
+      "posted_at": null,
+      "full_description": true
+    }
+  ]
+}

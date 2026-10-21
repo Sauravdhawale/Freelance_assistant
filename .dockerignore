@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+!.env.example
+**/node_modules
+**/dist
+**/coverage
+**/test-results
+**/playwright-report
+backups
+*.zip
+*.log
+upload
+docs
+n8n
+scripts

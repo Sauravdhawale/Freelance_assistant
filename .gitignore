@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+!.env.example
+!.env.netlify.example
+frontend/dist/
+coverage/
+backups/
+*.log
+*.dump
+*.pem
+test-results/
+.local-test/
+
+.netlify/
+.env.netlify

@@ -1,0 +1,2 @@
+platform,external_id,title,description,url,budget_min,budget_max,currency,work_type,experience_level,skills,posted_at,full_description
+peopleperhour,EXAMPLE-DO-NOT-SUBMIT-SQL-001,EXAMPLE ONLY — SQL and Power BI report,"Fictional local test only. Prepare SQL queries, clean a supplied data file and build a Power BI report with documented metric definitions and a handover. Do not submit this fictional opportunity to a platform.",https://www.peopleperhour.com/freelance-jobs/EXAMPLE-DO-NOT-SUBMIT-SQL-001,250,450,USD,fixed,intermediate,"SQL;Power BI;Data analytics;Reporting",,true

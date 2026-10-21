@@ -1,0 +1,32 @@
+{
+  "name": "arkentech-freelance-assistant",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "scripts": {
+    "build": "npm run build --workspace frontend",
+    "start": "node --env-file-if-exists=.env backend/src/server.js",
+    "migrate": "node --env-file-if-exists=.env backend/src/migrate.js",
+    "test": "npm run test --workspace backend",
+    "dev:api": "node --env-file-if-exists=.env --watch backend/src/server.js",
+    "dev:web": "npm run dev --workspace frontend",
+    "setup:netlify": "node --env-file-if-exists=.env scripts/setup-netlify.mjs",
+    "test:netlify": "node --test --test-concurrency=1 netlify/test/*.test.mjs",
+    "dev": "npm run dev --workspace frontend",
+    "check:netlify": "node scripts/check-netlify.mjs"
+  },
+  "dependencies": {
+    "@netlify/aws-lambda-compat": "2.0.3",
+    "serverless-http": "4.0.0"
+  },
+  "devDependencies": {
+    "@netlify/zip-it-and-ship-it": "16.4.1"
+  }
+}
